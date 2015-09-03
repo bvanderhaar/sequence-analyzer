@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
       if (strcmp(argv[c], "-f") == 0) {
         fexists = true;
         filename = string(argv[c + 1]);
-        cout << "Running program with file input " + filename + "\n";
+        cout << "Running analysis with file input " + filename + "\n";
       }
       if (strcmp(argv[c], "-t") == 0) {
         showtime = true;
@@ -53,6 +53,9 @@ int main(int argc, char *argv[]) {
   clock_t end_read = clock();
   double elapsed_secs_read = double(end_read - begin_read) / CLOCKS_PER_SEC;
 
+// This approach will loop through the string 4 times.
+// This sacrifices speed for readibility and flexibility
+// Compiler and other optimizations will get us close enough
   clock_t begin_gcount = clock();
   int gcount = count_string_occurance(file_to_analyze, 'G');
   clock_t end_gcount = clock();
@@ -97,6 +100,6 @@ int main(int argc, char *argv[]) {
            elapsed_secs_read, elapsed_secs_acount, elapsed_secs_tcount,
            elapsed_secs_ccount, elapsed_secs_gcount);
   }
-  
+
   return 0;
 }
