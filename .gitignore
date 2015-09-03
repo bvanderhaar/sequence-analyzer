@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# FASTA Input Files
+*.fasta*
+
+# Output Binary
+genome-analyzer

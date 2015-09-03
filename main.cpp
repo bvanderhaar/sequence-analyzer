@@ -30,12 +30,16 @@ int main(int argc, char *argv[]) {
   int c;
   string filename;
   bool fexists = false;
+  bool showtime = false;
   if (argc > 1) {
     for (c = 1; c < argc; c++) {
       if (strcmp(argv[c], "-f") == 0) {
         fexists = true;
         filename = string(argv[c + 1]);
         cout << "Running program with file input " + filename + "\n";
+      }
+      if (strcmp(argv[c], "-t") == 0) {
+        showtime = true;
       }
     }
   }
@@ -84,13 +88,15 @@ int main(int argc, char *argv[]) {
   printf("Guanine (G) Count (Percentage): %i (%f%%) \n", gcount,
          (gcount / total) * 100);
 
-  printf("Read Time: %f \n"
-         "A Count Time: %f \n"
-         "T Count Time: %f \n"
-         "C Count Time: %f \n"
-         "G Count Time: %f \n",
-         elapsed_secs_read, elapsed_secs_acount, elapsed_secs_tcount,
-         elapsed_secs_ccount, elapsed_secs_gcount);
-
+  if (showtime) {
+    printf("Read Time: %f \n"
+           "A Count Time: %f \n"
+           "T Count Time: %f \n"
+           "C Count Time: %f \n"
+           "G Count Time: %f \n",
+           elapsed_secs_read, elapsed_secs_acount, elapsed_secs_tcount,
+           elapsed_secs_ccount, elapsed_secs_gcount);
+  }
+  
   return 0;
 }
