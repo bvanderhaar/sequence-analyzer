@@ -84,11 +84,11 @@ int main(int argc, char *argv[]) {
   printf("Guanine (G) Count (Percentage): %i (%f%%) \n", gcount,
          (gcount / total) * 100);
 
-  printf("Read Time: %f, "
-         "A Count Time: %f, "
-         "T Count Time: %f, "
-         "C Count Time: %f, "
-         "G Count Time: %f",
+  printf("Read Time: %f \n"
+         "A Count Time: %f \n"
+         "T Count Time: %f \n"
+         "C Count Time: %f \n"
+         "G Count Time: %f \n",
          elapsed_secs_read, elapsed_secs_gcount, elapsed_secs_tcount,
          elapsed_secs_ccount, elapsed_secs_gcount);
 
