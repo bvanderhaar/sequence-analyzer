@@ -31,4 +31,4 @@
 *.fasta*
 
 # Output Binary
-genome-analyzer
+sequence-analyzer
