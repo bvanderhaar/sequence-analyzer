@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
          "T Count Time: %f \n"
          "C Count Time: %f \n"
          "G Count Time: %f \n",
-         elapsed_secs_read, elapsed_secs_gcount, elapsed_secs_tcount,
+         elapsed_secs_read, elapsed_secs_acount, elapsed_secs_tcount,
          elapsed_secs_ccount, elapsed_secs_gcount);
 
   return 0;
