@@ -1,1 +1,4 @@
-# cis677-homework1
+# Sequence Analyzer
+Usage: -f inputfile
+Options:
+-t outputs time information for running
