@@ -36,7 +36,7 @@ int count_cg(const string &source) {
 }
 
 double cpg_percentage(int &c, int &g, int &cg, int &size) {
-  return (cg / (double)(c*g)) * size;
+  return (cg / (double)(c * g)) * size;
 }
 
 string slurp(const string &filename) {
@@ -74,9 +74,9 @@ int main(int argc, char *argv[]) {
   clock_t end_read = clock();
   double elapsed_secs_read = double(end_read - begin_read) / CLOCKS_PER_SEC;
 
-// This approach will loop through the string 4 times.
-// This sacrifices speed for readibility
-// Compiler and other optimizations will get us close enough
+  // This approach will loop through the string 4 times.
+  // This sacrifices speed for readibility
+  // Compiler and other optimizations will get us close enough
   clock_t begin_gcount = clock();
   int gcount = count_string_occurance(file_to_analyze, 'G');
   clock_t end_gcount = clock();
@@ -131,21 +131,19 @@ int main(int argc, char *argv[]) {
   double occurance;
 
   for (int i = 0; i < file_to_analyze.size(); i++) {
-    string_to_analyze = file_to_analyze.substr(i,window);
-    //printf("%s",string_to_analyze.c_str());
-    cg_count = count_cg(string_to_analyze);
-    cg_percentage = cg_count / (double) (window * 0.125);
+    string_to_analyze = file_to_analyze.substr(i, window);
+    // printf("%s",string_to_analyze.c_str());
+    c_count = count_string_occurance(string_to_analyze, 'C');
+    g_count = count_string_occurance(string_to_analyze, 'G');
+    cg_percentage = (c_count + g_count) / (double)window;
     if (cg_percentage > 0.5) {
-      printf("String has %f%% CG - Greater than 50%%!\n", cg_percentage);
-      c_count = count_string_occurance(string_to_analyze, 'C');
-      g_count = count_string_occurance(string_to_analyze, 'G');
-
+      // printf("String has %f%% CG - Greater than 50%%!\n", cg_percentage);
+      cg_count = count_cg(string_to_analyze);
       occurance = cpg_percentage(c_count, g_count, cg_count, window);
       if (occurance > 0.6) {
-        printf("Found CPG Island!\n");
+        printf("Found possible CpG island from character %i to %i \n", i,
+               (i + window));
       }
-    } else {
-      printf("String has %f%% CG\n", cg_percentage);
     }
   }
 
