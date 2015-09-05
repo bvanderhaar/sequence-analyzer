@@ -18,6 +18,27 @@ int count_string_occurance(const string &source, const char &target) {
   return count;
 }
 
+int count_cg(const string &source) {
+  int count = 0;
+  bool prev_c = false;
+  for (char c : source) {
+    if (c == 'C') {
+      prev_c = true;
+    } else if (prev_c && c == 'G') {
+      count++;
+      prev_c = false;
+    } else {
+      prev_c = false;
+    }
+  }
+
+  return count;
+}
+
+double cpg_percentage(int &c, int &g, int &cg, int &size) {
+  return (cg / (double)(c*g)) * size;
+}
+
 string slurp(const string &filename) {
   ifstream in(filename, ifstream::in);
   stringstream sstr;
@@ -54,7 +75,7 @@ int main(int argc, char *argv[]) {
   double elapsed_secs_read = double(end_read - begin_read) / CLOCKS_PER_SEC;
 
 // This approach will loop through the string 4 times.
-// This sacrifices speed for readibility and flexibility
+// This sacrifices speed for readibility
 // Compiler and other optimizations will get us close enough
   clock_t begin_gcount = clock();
   int gcount = count_string_occurance(file_to_analyze, 'G');
@@ -99,6 +120,33 @@ int main(int argc, char *argv[]) {
            "G Count Time: %f \n",
            elapsed_secs_read, elapsed_secs_acount, elapsed_secs_tcount,
            elapsed_secs_ccount, elapsed_secs_gcount);
+  }
+
+  string string_to_analyze;
+  int window = 400;
+  int cg_count = 0;
+  int c_count = 0;
+  int g_count = 0;
+  double cg_percentage;
+  double occurance;
+
+  for (int i = 0; i < file_to_analyze.size(); i++) {
+    string_to_analyze = file_to_analyze.substr(i,window);
+    //printf("%s",string_to_analyze.c_str());
+    cg_count = count_cg(string_to_analyze);
+    cg_percentage = cg_count / (double) (window * 0.125);
+    if (cg_percentage > 0.5) {
+      printf("String has %f%% CG - Greater than 50%%!\n", cg_percentage);
+      c_count = count_string_occurance(string_to_analyze, 'C');
+      g_count = count_string_occurance(string_to_analyze, 'G');
+
+      occurance = cpg_percentage(c_count, g_count, cg_count, window);
+      if (occurance > 0.6) {
+        printf("Found CPG Island!\n");
+      }
+    } else {
+      printf("String has %f%% CG\n", cg_percentage);
+    }
   }
 
   return 0;
